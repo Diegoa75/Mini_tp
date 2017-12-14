@@ -18,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
@@ -43,7 +44,12 @@ public class Usuario implements Serializable{
      @JoinTable(name="UsuarioCurso", joinColumns={@JoinColumn(name="IdUsuario")}, inverseJoinColumns={@JoinColumn(name="IdCurso")})  
 	 @Fetch(value = FetchMode.SUBSELECT)
 	 private Collection<Curso> cursos = new ArrayList<Curso>();
-	
+	 
+	@OneToMany(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.REFRESH})
+	@JoinColumn (name="idUsuario")
+	 @Fetch(value = FetchMode.SUBSELECT)
+	private List<Nota> notas;
+		
 	public Usuario(){};
 	public Usuario(String email,String password, String rol) {
 		this.email = email;
@@ -96,6 +102,13 @@ public class Usuario implements Serializable{
 	}
 	public void setCursos(Collection<Curso> cursos) {
 		this.cursos = cursos;
+	}
+	
+	public List<Nota> getNotas() {
+		return notas;
+	}
+	public void setNotas(List<Nota> notas) {
+		this.notas = notas;
 	}
 	
 }

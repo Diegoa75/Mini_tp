@@ -24,8 +24,6 @@ public class Pregunta {
 	private long id;	
 	private String nombre;
 	
-//	@OneToMany (cascade=CascadeType.ALL)
-//	@JoinColumn (name="idPregunta")	
 	
 	@ManyToOne (fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn (name="idExamen")

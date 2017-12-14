@@ -30,7 +30,7 @@ public class Curso implements Serializable{
 	private int cantidadAlumnos;
 	private int maximoAlumnos;
 			
-	 @ManyToMany(fetch=FetchType.EAGER, cascade = {CascadeType.ALL},mappedBy="cursos")	
+	 @ManyToMany(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.REFRESH},mappedBy="cursos")	
 	 @Fetch(value = FetchMode.SUBSELECT)	
 	 private Collection<Usuario> usuarios = new ArrayList<Usuario>();
 	 
@@ -38,7 +38,7 @@ public class Curso implements Serializable{
 	@JoinColumn (name="idCurso")
 	private List<Usuario> usuarios;*/
 	 	
-	@OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER,cascade= {CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn (name="idCurso")	
 	@Fetch(value = FetchMode.SUBSELECT)	
 	private List<Examen> examen;

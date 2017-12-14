@@ -15,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import ar.edu.unlam.tallerweb1.modelo.Curso;
 import ar.edu.unlam.tallerweb1.modelo.Examen;
+import ar.edu.unlam.tallerweb1.modelo.Nota;
 import ar.edu.unlam.tallerweb1.modelo.Pregunta;
 import ar.edu.unlam.tallerweb1.modelo.Respuesta;
 import ar.edu.unlam.tallerweb1.servicios.Curso.ServicioCurso;
@@ -34,7 +35,8 @@ public class DocenteController{
 	@RequestMapping(value="/IrAccion", method= RequestMethod.POST)	
 	public ModelAndView altaExamen(@RequestParam("IdCurso")long idCurso, @RequestParam("btnAction")String accion){
 		ModelMap model = new ModelMap();	
-		Curso curso = new Curso();	
+		Curso curso = new Curso();
+		Nota nota = new Nota();
 		curso = serviciocurso.GetCurso(idCurso);
 		Examen examen = new Examen();	
 		String vista="";
@@ -52,6 +54,11 @@ public class DocenteController{
 		case "Ver Alumnos": 
 			model.put("Curso", curso);						
 			vista="vistaAlumnoCurso";
+			
+		case	"Ver Notas":
+			model.put("Curso", curso);
+			
+			vista="vistaNotasAlumnos";
 		}	
 		
 		return new ModelAndView(vista, model);		
@@ -78,12 +85,10 @@ public class DocenteController{
 		Examen examen = new Examen();	
 		examen= servicioexamen.cargarExamen((long)idExamen);
 		
-		examen.setHabilitado(1);
-		
-		servicioexamen.SetEstadoExamen(examen);
-				
-		model.addAttribute("Curso", examen.getCurso());	
-					
+		examen.setHabilitado(1);			
+		servicioexamen.SetEstadoExamen(examen);	
+						
+		model.addAttribute("Curso", examen.getCurso());						
 		return new ModelAndView("listaExamen",model);
 	
 	}
@@ -94,25 +99,16 @@ public class DocenteController{
 		ModelMap model = new ModelMap();
 		Examen examen = new Examen();	
 		examen= servicioexamen.cargarExamen((long)idExamen);
-		
-		examen.setHabilitado(0);
-		
-		servicioexamen.SetEstadoExamen(examen);
-				
+			
+		examen.setHabilitado(0);			
+		servicioexamen.SetEstadoExamen(examen);					
+							
 		model.addAttribute("Curso", examen.getCurso());	
 					
 		return new ModelAndView("listaExamen",model);
 	
 	}
 	
-	
-	
-	
-	/*@RequestMapping(value = "/BorrarExamenDocente/listaExamen", method = RequestMethod.GET)
-	   public String homeExamenDocente() {
-	      return "listaExamen";
-	   }*/
-		
 	
 	/*ALTA EXAMEN*/
 	@RequestMapping(value="/guardarExamen", method= RequestMethod.POST)	
@@ -228,19 +224,23 @@ public class DocenteController{
 		Pregunta pregunta = new Pregunta();
 		pregunta= serviciopregunta.cargarPregunta((long) idPregunta);
 		
-		if (checkCorrecta==1){
-			respuesta.setCorrecta(true);
+		/*valido que solo exista una respuesta correcta*/
+		if (servicioRespuesta.validarRespuesta((long) idPregunta) && (checkCorrecta==1)) {
+			ModelRespuesta.put("mensageErr", "<script type='text/javascript'>alert('Solo puede existir 1 respuesta Correcta por pregunta');</script>");		
 		}
 		else
 		{
-			respuesta.setCorrecta(false);
+			if (checkCorrecta==1)
+				respuesta.setCorrecta(true);			
+			else			
+				respuesta.setCorrecta(false);
+			
+			/*relaciono la pregunta con la respuesta y la guardo */
+			respuesta.setPregunta(pregunta);			
+		    servicioRespuesta.grabarRespuesta(respuesta);			
 		}
-				
-				
-		/*relaciono la pregunta con la respuesta y la guardo */
-		respuesta.setPregunta(pregunta);			
-	    servicioRespuesta.grabarRespuesta(respuesta);
-			    								
+		
+					    								
 		examen= servicioexamen.cargarExamen((long)idExamen);				
 		ModelRespuesta.put("examen", examen);				
 		 				

@@ -20,7 +20,11 @@
 <header class="panel-primary">
 <div class="container-fluid panel-heading">
    <h1><center><img src="${pageContext.request.contextPath}/img/Logo.jpg"/></center></h1>
-   <div class="col-md-11"> <center><h2>Alumnos del Curso ${Curso.nombre} </h2></center></div>  <div class="col-md-1"><a href="/proyecto-limpio-spring/exit"  class="btn btn-info btn-lg active" role="button">Salir</a></div>
+   <div class="col-md-11"> <center><h2>Alumnos del Curso ${Curso.nombre} </h2></center></div>  
+    <div class="col-md-1"> 
+      <a href="/proyecto-limpio-spring/irHomeusuario" class="btn btn-large btn-block btn-info">Inicio</a>
+    <a href="/proyecto-limpio-spring/exit" class="btn btn-large btn-block btn-danger">Salir</a>
+ </div> 
 </div>
 </header>
 
@@ -39,27 +43,15 @@
     				
     				<c:if test="${not empty Curso.usuarios}">	  
                 		<th><h3>Nombre</h3></th>  
-                		<th><h3>Apellido</h3></th>
-                		<th></th>
-                		<th></th>
-    				</c:if>                   
-                                  
-                  
+                		<th><h3>Apellido</h3></th>                		
+    				</c:if>  
                 </tr>
               </thead>
               <tbody>
 	              <c:forEach items= "${Curso.usuarios}" var="usuario">              
 	                <tr>	              
 	                  <td><h4>${usuario.nombre}</h4></td>	
-	                   <td><h4>${usuario.apellido}</h4></td>
-	                 <td><a class="btn btn-success" href="<c:url value='/ModificarExamenDocente/${usuario.id}'/>"  role="button">Modificar Examen</a>
-	                 <c:if test="${examen.habilitado==0}">	  
-                		 <a class="btn btn-danger" href="<c:url value='/DesabilitarExamenDocente/${usuario.id}'/>" role="button">Deshabilitar Examen</a>
-    				</c:if>  
-    				 <c:if test="${examen.habilitado==1}">	  
-                		 <a class="btn btn-primary" href="<c:url value='/HabilitarExamenDocente/${usuario.id}'/>" role="button">Habilitar Examen</a>
-    				</c:if>  
-	                  </td>
+	                   <td><h4>${usuario.apellido}</h4></td>	                
 	                </tr> 
 	              </c:forEach>               
               </tbody>

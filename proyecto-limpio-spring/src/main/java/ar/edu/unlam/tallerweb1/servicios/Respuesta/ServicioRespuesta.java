@@ -8,6 +8,6 @@ public interface ServicioRespuesta {
 	public void grabarRespuesta(Respuesta Respuesta);
 	public Respuesta nomRespuesta(long idRta);
 	public boolean borrarRespuesta( long IdRespuesta);
-	
+	public boolean validarRespuesta(long idPregunta);
 	
 }

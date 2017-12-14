@@ -19,6 +19,7 @@ public interface ExamenDao {
 	 ArrayList<Nota>getNotas(long Idexamen);
 	 ArrayList <Examen> cargarExamenXCurso(long Idcurso);
 	 public void SetEstadoExamen(Examen examen);
+	 public ArrayList <Examen> getExamenPendientes(long idUsuario, long idCurso);
 }
 	
 

@@ -20,7 +20,11 @@
 <header class="panel-primary">
 <div class="container-fluid panel-heading">
    <h1><center><img src="${pageContext.request.contextPath}/img/Logo.jpg"/></center></h1>
-   <div class="col-md-11"> <center><h2>Listado de Examenes del curso ${Curso.nombre}</h2></center></div>  <div class="col-md-1"><a href="/proyecto-limpio-spring/exit"  class="btn btn-info btn-lg active" role="button">Salir</a></div>
+   <div class="col-md-11"> <center><h2>Listado de Examenes del curso ${Curso.nombre}</h2></center></div>  
+    <div class="col-md-1"> 
+      <a href="/proyecto-limpio-spring/irHomeusuario" class="btn btn-large btn-block btn-info">Inicio</a>
+    <a href="/proyecto-limpio-spring/exit" class="btn btn-large btn-block btn-danger">Salir</a>
+ </div> 
 </div>
 </header>
 
@@ -39,7 +43,8 @@
                 		 <th><h3>No hay Examenes Disponibles</h3></th>  
                 		     
     				</c:if>
-    				<c:if test="${not empty Curso.examen}">	  
+    				<c:if test="${not empty Curso.examen}">	
+    					<th><h3>id</h3></th>  
                 		<th><h3>Nombre Examen</h3></th>  
                 		<th><h3>Estado</h3></th>
                 		<th></th>
@@ -51,7 +56,8 @@
               </thead>
               <tbody>
 	              <c:forEach items= "${Curso.examen}" var="examen">              
-	                <tr>	              
+	                <tr>
+	                	 <td><h4>${examen.id}</h4></td>	              
 	                  <td><h4>${examen.nombre}</h4></td>	
 	                   <td><h4>${examen.estado}</h4></td>
 	                 <td><a class="btn btn-success" href="<c:url value='/ModificarExamenDocente/${examen.id}'/>"  role="button">Modificar Examen</a>

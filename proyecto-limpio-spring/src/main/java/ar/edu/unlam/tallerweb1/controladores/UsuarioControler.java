@@ -40,65 +40,7 @@ public class UsuarioControler {
 	registrarDocente.grabarUsuario(docente);
 	return new ModelAndView("home",model);	
 	}
-	
-	
-	
-	/*@Inject
-	private ServicioCurso BuscarCursos;
-	@RequestMapping(value="/verCursos/{idUsuario}")
-	public ModelAndView verCursos(@PathVariable(value="idUsuario")long idUsuario)
-	{
-	ModelMap model= new ModelMap();	
-	ArrayList<Curso>cursos = new ArrayList<Curso>();
-	cursos = BuscarCursos.consultarTodosLosCursos(idUsuario);
-	model.put("CursosdelAlumno", cursos);
-	return new ModelAndView("cursosAlumno",model);	
-	}*/
-	
-	
 }
 	
-
-
-
-
-	/*@RequestMapping(value="/guardarDocente", method = RequestMethod.POST)
-	public ModelAndView guardarDocente(@ModelAttribute("docente")Docente docente, @RequestParam ("email")String email, 
-			@RequestParam ("password") String password)
-	{
-	ModelMap model= new ModelMap();
-	Usuario usuario = new Usuario(email, password);
-	model.put("personas",docente);
-	registrarDocente.grabarDocente(docente);
-	registrarUsuario.grabarUsuario(usuario);
-	return new ModelAndView("home",model);	
-	}*/
 	
-	/*@Inject
-	private ServicioUsuario registarUsuario;
-	@Inject
-	private ServicioDocente registrarDocente;
-	@RequestMapping(value="/guardarDocente", method = RequestMethod.POST)
-	public ModelAndView guardarDocente(@RequestParam ("nombre")String nombre, @RequestParam ("apellido")String apellido, 
-			@RequestParam ("email")String email, @RequestParam ("password") String password)
-	{
-	ModelMap model= new ModelMap();
-	Docente docente = new Docente(nombre, apellido);//debo poner en el model a usuario?
-	Usuario usuario = new Usuario(email, password);
-	model.put("docentes",docente);// para que le paso el docente en este caso? si va al home
-	model.put("usuarios", usuario);
-	registrarDocente.grabarDocente(docente);
-	registarUsuario.grabarUsuario(usuario);
-	return new ModelAndView("home",model);}*/
-
-/*	@Inject
-	private UsuarioServicios registarUsuario;
-  @RequestMapping(value="/registracion",  method = RequestMethod.POST)
- public ModelAndView guardarUsuario(@ModelAttribute("usuario") Usuario usuario) {
-registarUsuario.grabarUsuario(usuario);
-ModelAndView registracion = new ModelAndView();
-registracion.addObject("nombre", usuario.getNombre());
-registracion.addObject("apellido", usuario.getApellido());
-registracion.setViewName("registracionOk");
-return registracion;
-}*/
+	

@@ -1,6 +1,7 @@
 package ar.edu.unlam.tallerweb1.persistencia.JunitTest;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -32,9 +33,9 @@ public class TestUsuarioCurso  extends SpringTest{
 	    @Before
 	    @Transactional @Rollback(false)
 	    public void llenarDatos()  
-	    {   
-	    		        	
-	    	Curso curso = new Curso(); 	    	
+	    {   	    		        	
+	    	Collection<Curso> cursos = new ArrayList<Curso>(); 
+	    	Curso curso = new Curso();
 	    	curso.setNombre("Ingles");
 	       	  		    		    	
 	    	       	
@@ -44,7 +45,9 @@ public class TestUsuarioCurso  extends SpringTest{
 	    	usuario.setRol("alumno");
 	    	usuario.setPassword("1234");
 	    	
-	    	usuario.setCursos(curso);
+	    	cursos.add(curso);
+	    	
+	    	usuario.setCursos(cursos);
 	    	
 	    	getSession().save(usuario);  
 	    		    	
@@ -62,9 +65,13 @@ public class TestUsuarioCurso  extends SpringTest{
 	    			.add(Restrictions.eq("cur.nombre", "Ingles"))    	   			
 	    			.list();    	      
 	    	 
-	    	for (Usuario usuario : usr) {  	    			    	
-	    		    Assert.assertEquals(usuario.getCursos().getNombre(),"Ingles");	    	
+	    	for (Usuario usuario : usr) {  
+	    			    		
+	    		for (Curso  curso : usuario.getCursos()) { 	    			
+	    			 Assert.assertEquals(curso.getNombre(),"Ingles");	    			
 	    		}
+	    		      	
+	    	}
 		   
 		   
 	    }

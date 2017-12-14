@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -56,6 +57,19 @@ public class RespuestaDaoImpl implements RespuestaDao{
 		}
 				
 		return Borro;
+	
+	}
+	
+	@Override
+	public ArrayList<Respuesta> getRespuestas(long idPregunta){
+		
+		final Session session = sessionFactory.getCurrentSession();
+		
+		return (ArrayList<Respuesta>) session.createCriteria(Respuesta.class)    			
+    			.createAlias("pregunta", "pre")
+    			 .setFetchMode("pregunta", FetchMode.JOIN) 
+    			.add(Restrictions.eq("pre.id", idPregunta))    	   			
+    			.list();    
 	
 	}
 
